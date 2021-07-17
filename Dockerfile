@@ -1,4 +1,6 @@
-FROM docker-registry.eyeosbcn.com/alpine6-node-base
+FROM nerteronoffice/alpine6-node-base
+
+USER root
 
 COPY alpine-*.list /var/service/
 COPY serf.py /bin/
@@ -6,9 +8,9 @@ COPY serf.py /bin/
 ENV SERF_ADVERTISE_IP 172.17.42.1
 ENV SERF_BIND_ADDRESS ""
 
-RUN /scripts-base/buildDependencies.sh --production --install && \
-    rm -r /var/cache/apk/* && \
-    chmod +x /bin/serf.py
+RUN apk update && apk add curl make gcc g++ git python3 dnsmasq
+RUN rm -r /var/cache/apk/*
+RUN chmod +x /bin/serf.py
 
 CMD /bin/serf.py
 
