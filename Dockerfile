@@ -1,7 +1,5 @@
 FROM nerteronoffice/alpine6-node-base
 
-USER root
-
 COPY alpine-*.list /var/service/
 COPY serf.py /bin/
 
